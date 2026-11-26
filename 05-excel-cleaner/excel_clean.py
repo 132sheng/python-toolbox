@@ -203,12 +203,12 @@ def safe_sheet_name(name: str, used: set[str]) -> str:
     return candidate
 
 
-def clean_workbook(path: Path, sheet: str) -> tuple[int, int]:
+def clean_workbook(path: Path, sheet: str, out_dir: Path) -> tuple[int, int]:
     """清洗一个工作簿，返回（处理表数，输出行数）。"""
     sheets = pd.read_excel(path, sheet_name=None, header=HEADER_ROW - 1, dtype=object)
     selected = pick_sheets(sheets, sheet, path)
 
-    output = OUTPUT_DIR / f"{path.stem}{OUTPUT_SUFFIX}.xlsx"
+    output = out_dir / f"{path.stem}{OUTPUT_SUFFIX}.xlsx"
     used_names: set[str] = set()
     processed = 0
     total_rows = 0
@@ -267,7 +267,7 @@ def main() -> None:
     for path in files:
         print(f"\n{path.name}")
         try:
-            processed, rows = clean_workbook(path, sheet)
+            processed, rows = clean_workbook(path, sheet, output_dir)
         except Exception as exc:  # 单个文件损坏不影响整批
             print(f"  处理失败：{type(exc).__name__}: {exc}")
             continue
