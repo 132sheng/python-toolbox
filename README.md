@@ -31,7 +31,7 @@
 ## 快速开始
 
 ```bash
-git clone https://github.com/sheng132/python-toolbox.git
+git clone https://github.com/132sheng/python-toolbox.git
 cd python-toolbox
 
 # 项目一、三：纯静态，浏览器直接打开
@@ -117,4 +117,4 @@ python-toolbox/
 
 ## License
 
-[MIT](./LICENSE) © 2026 sheng132
+[MIT](./LICENSE) © 2026 132sheng
