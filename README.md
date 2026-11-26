@@ -19,6 +19,8 @@
 | 02 | [考研分数线看板](./02-kaoyan-dashboard) | 5791 条院校分数线 → 清洗 → 交互式可视化看板 | Python / pandas / pyecharts | `python analyze.py` |
 | 03 | [元素定位工具箱](./03-selector-toolbox) | 粘贴 HTML，点一下就生成 XPath / CSS 选择器 | HTML / JavaScript | 双击 `index.html` |
 | 04 | [Excel 批量合并](./04-excel-merger) | 一文件夹的表格合成一张总表，自动处理脏数据 | Python / pandas / openpyxl | `python excel_merge.py -i ./目录` |
+| 05 | [Excel 自动清理](./05-excel-cleaner) | 脏表格一键洗白：洗表头、去空行空列重复、统一文本数字日期 | Python / pandas / openpyxl | `python excel_clean.py -i ./目录` |
+| 06 | [ZOL 手机数据爬虫](./06-zol-phone-spider) | 抓取 160 条手机数据与图片，图片直接写进 Excel 第 2 列 | Python / requests / lxml / openpyxl | `python zol_phone_spider.py` |
 
 ### 技术栈
 
@@ -63,6 +65,11 @@ python-toolbox/
 ├── 04-excel-merger/         # Excel 批量合并
 │   ├── excel_merge.py       # 合并逻辑
 │   └── README.md            # 参数与已知限制
+├── 05-excel-cleaner/        # Excel 自动清理
+│   └── excel_clean.py       # 清洗流程
+├── 06-zol-phone-spider/     # ZOL 手机数据爬虫
+│   ├── zol_phone_spider.py  # 采集 + 图片下载 + 写 Excel
+│   └── .gitignore           # 图片与数据产物不提交
 ├── requirements.txt
 └── LICENSE
 ```

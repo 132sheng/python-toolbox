@@ -1,0 +1,4 @@
+# 爬取产物：图片与 Excel 数据不进仓库
+phoneImage/
+*.xlsx
+__pycache__/
