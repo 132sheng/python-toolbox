@@ -18,6 +18,7 @@
 | 01 | [PyType Lite 打字闯关](./01-typing-game) | 练 Python 关键词手速的网页小游戏，单文件零依赖 | HTML / CSS / JavaScript | 双击 `index.html` |
 | 02 | [考研分数线看板](./02-kaoyan-dashboard) | 5791 条院校分数线 → 清洗 → 交互式可视化看板 | Python / pandas / pyecharts | `python analyze.py` |
 | 03 | [元素定位工具箱](./03-selector-toolbox) | 粘贴 HTML，点一下就生成 XPath / CSS 选择器 | HTML / JavaScript | 双击 `index.html` |
+| 04 | [Excel 批量合并](./04-excel-merger) | 一文件夹的表格合成一张总表，自动处理脏数据 | Python / pandas / openpyxl | `python excel_merge.py -i ./目录` |
 
 ### 技术栈
 
@@ -35,11 +36,14 @@ git clone https://github.com/132sheng/python-toolbox.git
 cd python-toolbox
 
 # 项目一、三：纯静态，浏览器直接打开
-# 项目二：需要 Python 环境
+# 项目二、四：需要 Python 环境
 pip install -r requirements.txt
 cd 02-kaoyan-dashboard
 python analyze.py --top 15          # 生成 dashboard.html
 python analyze.py --school 清华大学   # 查单个院校明细
+
+cd ../04-excel-merger
+python excel_merge.py -i ./你的表格目录
 ```
 
 生成的看板**自带 ECharts，离线可用**，不依赖任何 CDN。
@@ -56,6 +60,9 @@ python-toolbox/
 │   ├── assets/              # 离线 ECharts
 │   └── data/                # 分数线数据
 ├── 03-selector-toolbox/     # 元素定位调试器（单文件）
+├── 04-excel-merger/         # Excel 批量合并
+│   ├── excel_merge.py       # 合并逻辑
+│   └── README.md            # 参数与已知限制
 ├── requirements.txt
 └── LICENSE
 ```
@@ -105,6 +112,23 @@ python-toolbox/
 - 纯前端运行，页面内容不上传
 
 生成的 XPath 是逐层带索引的绝对路径，CSS 选择器做了唯一性处理，复制进 requests / DrissionPage / Selenium 都能直接命中。
+
+### 04 · Excel 批量合并
+
+每周收上来十几个格式差不多但不完全一样的表格，手动复制粘贴半小时起步。
+
+```bash
+python excel_merge.py -i ./订单表
+```
+
+一条命令合成一张总表，并且顺手处理掉这些脏活：
+
+- **表头不一致**：取并集，缺的格子留空，不会错位
+- **空表 / `~$` 临时文件 / 损坏文件**：自动跳过，最后列清单
+- **重复运行**：自动排除上次的结果，不会把数据合并两遍
+- **来源可追溯**：每行加一列「来源文件」
+
+> 支持 `.xlsx` / `.xlsm`，`.xls` 需先另存为新格式。
 
 ---
 
