@@ -21,6 +21,7 @@
 | 04 | [Excel 批量合并](./04-excel-merger) | 一文件夹的表格合成一张总表，自动处理脏数据 | Python / pandas / openpyxl | `python excel_merge.py -i ./目录` |
 | 05 | [Excel 自动清理](./05-excel-cleaner) | 脏表格一键洗白：洗表头、去空行空列重复、统一文本数字日期 | Python / pandas / openpyxl | `python excel_clean.py -i ./目录` |
 | 06 | [ZOL 手机数据爬虫](./06-zol-phone-spider) | 抓取 160 条手机数据与图片，图片直接写进 Excel 第 2 列 | Python / requests / lxml / openpyxl | `python zol_phone_spider.py` |
+| 07 | [Excel 按列拆分](./07-excel-splitter) | 一张总表按某列拆成几十个文件，或按行数切块 | Python / pandas / openpyxl | `python split_excel.py -i 总表.xlsx -c 客户` |
 
 ### 技术栈
 
@@ -70,6 +71,9 @@ python-toolbox/
 ├── 06-zol-phone-spider/     # ZOL 手机数据爬虫
 │   ├── zol_phone_spider.py  # 采集 + 图片下载 + 写 Excel
 │   └── .gitignore           # 图片与数据产物不提交
+├── 07-excel-splitter/       # Excel 按列拆分
+│   ├── split_excel.py       # 按列 / 按行数拆分
+│   └── README.md            # 参数与已知限制
 ├── requirements.txt
 └── LICENSE
 ```
@@ -136,6 +140,20 @@ python excel_merge.py -i ./订单表
 - **来源可追溯**：每行加一列「来源文件」
 
 > 支持 `.xlsx` / `.xlsm`，`.xls` 需先另存为新格式。
+
+### 07 · Excel 按列拆分
+
+合并的反向操作：一张总表要按部门、地区、客户分发，手动拆几十份最容易出错。
+
+```bash
+python split_excel.py -i 总表.xlsx -c 客户
+```
+
+- **按列拆**：每个值生成一个独立文件，文件名按单元格内容自动命名
+- **按行切块**：`--rows 500`，每 500 行一个文件
+- **文件名安全**：`/ : * ?` 这类非法字符自动替换，不会写到一半报错
+- **不覆盖**：同名文件自动加 `_2`、`_3`
+- **空值归堆**：没填内容的行统一进「未填写.xlsx」，不会丢
 
 ---
 
