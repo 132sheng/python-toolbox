@@ -7,6 +7,10 @@
 
 ---
 
+![考研分数线看板](docs/screenshots/dashboard.png)
+
+---
+
 ## 项目一览
 
 | # | 项目 | 一句话说明 | 技术栈 | 运行方式 |
@@ -64,6 +68,8 @@ python-toolbox/
 
 一个 36 KB 的单文件网页游戏，用来练 Python 关键字和常用函数的输入速度。
 
+![PyType Lite](docs/screenshots/typing-game.png)
+
 - 零依赖、零构建，双击即玩，可直接挂静态托管
 - 逐题计时，实时统计得分、连击、正确率
 - 基础 / 关键字 / 符号 三档关卡，按得分解锁
@@ -90,6 +96,8 @@ python-toolbox/
 ### 03 · 元素定位工具箱
 
 写爬虫时最费时间的不是请求，是"这个元素到底怎么定位"。
+
+![元素定位工具箱](docs/screenshots/selector-toolbox.png)
 
 - 左边贴 HTML 源码，右边实时渲染出页面
 - 在预览里点任意元素，直接给出它的 XPath、CSS 选择器
