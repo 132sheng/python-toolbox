@@ -4,3 +4,4 @@ openpyxl>=3.1
 requests>=2.28
 lxml>=4.9
 pillow>=10.0
+pygame>=2.5

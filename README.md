@@ -22,6 +22,7 @@
 | 05 | [Excel 自动清理](./05-excel-cleaner) | 脏表格一键洗白：洗表头、去空行空列重复、统一文本数字日期 | Python / pandas / openpyxl | `python excel_clean.py -i ./目录` |
 | 06 | [ZOL 手机数据爬虫](./06-zol-phone-spider) | 抓取 160 条手机数据与图片，图片直接写进 Excel 第 2 列 | Python / requests / lxml / openpyxl | `python zol_phone_spider.py` |
 | 07 | [Excel 按列拆分](./07-excel-splitter) | 一张总表按某列拆成几十个文件，或按行数切块 | Python / pandas / openpyxl | `python split_excel.py -i 总表.xlsx -c 客户` |
+| 08 | [AI 贪吃蛇](./08-snake-ai) | 带自动寻路 AI 的贪吃蛇，BFS + 生存校验 + 追尾保命 | Python / Pygame | `python snake_ai.py` |
 
 ### 技术栈
 
@@ -74,6 +75,9 @@ python-toolbox/
 ├── 07-excel-splitter/       # Excel 按列拆分
 │   ├── split_excel.py       # 按列 / 按行数拆分
 │   └── README.md            # 参数与已知限制
+├── 08-snake-ai/             # AI 贪吃蛇
+│   ├── snake_ai.py          # 逻辑 + AI + 渲染
+│   └── README.md            # 三层决策说明
 ├── requirements.txt
 └── LICENSE
 ```
@@ -154,6 +158,37 @@ python split_excel.py -i 总表.xlsx -c 客户
 - **文件名安全**：`/ : * ?` 这类非法字符自动替换，不会写到一半报错
 - **不覆盖**：同名文件自动加 `_2`、`_3`
 - **空值归堆**：没填内容的行统一进「未填写.xlsx」，不会丢
+
+### 08 · AI 贪吃蛇
+
+用 Pygame 写的贪吃蛇，**蛇会自己找路**。
+
+![AI 贪吃蛇](docs/screenshots/snake-ai.png)
+
+```bash
+python snake_ai.py            # AI 自动玩
+python snake_ai.py --manual   # 自己玩
+```
+
+AI 是三层决策，不是单纯的最短路：
+
+1. **BFS 求最短路**——蛇头到食物，绕开身体；
+2. **生存校验**——走之前先模拟，看走完这一步蛇头还能不能摸到蛇尾（摸不到就是被围死了）；
+3. **追尾保命**——第 2 步不通过，就朝空地最大的方向走，等空间重新打开。
+
+只做第 1 层是新手最容易写的版本，蛇一长就把自己关进死胡同。加上第 2、3 层，固定种子实测能吃到 146 分、蛇身 149 节（棋盘 576 格）。
+
+逻辑和渲染是分开的，测 AI 不用开窗口：
+
+```python
+from snake_ai import SnakeGame, SnakeAI
+game, ai = SnakeGame(seed=42), SnakeAI()
+while not game.dead:
+    game.step(ai.choose(game))
+print(game.score)   # 146
+```
+
+截图也不用显示器，`--shot` 走 SDL 的 dummy 驱动，CI 里能跑。
 
 ---
 
